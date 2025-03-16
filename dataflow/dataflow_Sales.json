@@ -1,0 +1,74 @@
+{
+	"name": "dataflow_Sales",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "Sourcecsv",
+					"description": "Import data from CSV"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivednewcolumn"
+				},
+				{
+					"name": "aggregate1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ID as string,",
+				"          Name as string,",
+				"          Product_ID as string,",
+				"          Product_Name as string,",
+				"          Units as integer,",
+				"          Cost as double,",
+				"          Total_Price as double,",
+				"          Discount as integer,",
+				"          Total_After_Discount as double",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: true,",
+				"     inferDriftedColumnTypes: true,",
+				"     limit: 10,",
+				"     ignoreNoFilesFound: false) ~> Sourcecsv",
+				"Sourcecsv derive(Total_Price_New = multiply(toDouble(Units), toDouble(Cost)),",
+				"          Calculated_Date = currentDate()) ~> derivednewcolumn",
+				"derivednewcolumn aggregate(groupBy(Product_Name),",
+				"     Total_Sales = sum(Total_Price_New)) ~> aggregate1",
+				"aggregate1 sink(allowSchemaDrift: true,",
+				"     validateSchema: true,",
+				"     input(",
+				"          ID as string,",
+				"          Name as string,",
+				"          Product_ID as string,",
+				"          Product_Name as string,",
+				"          Units as string,",
+				"          Cost as string,",
+				"          Total_Price as string,",
+				"          Discount as string,",
+				"          Total_After_Discount as string",
+				"     ),",
+				"     partitionFileNames:['Total_Sales_Product_Name'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}

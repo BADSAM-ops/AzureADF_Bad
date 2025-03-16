@@ -1,0 +1,9 @@
+{
+	"name": "BadriADFTutorialDataFactory",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "3a627c4e-a021-4f00-9ef7-4d3e4325fca6",
+		"tenantId": "dd553304-275c-4c6a-8721-6d9693999fdc"
+	}
+}
