@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "BadriADFTutorialDataFactory"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_password": {
+			"value": ""
+		},
+		"AzureDatabricks1_properties_typeProperties_existingClusterId": {
+			"value": "0302-083507-yp4a7kax"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "mysqlserver787.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "mySampleDatabase"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "azureuser"
+		}
+	}
+}
